@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tipología de bots pedagógicos · Proyecto IeA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #FFF8F0;
+    --c-surface: #FFFFFF;
+    --c-ink: #2A1A14;
+    --c-ink-soft: #5A4438;
+    --c-line: #E8D9C7;
+    --c-bot-1:  #B5443B;
+    --c-bot-2:  #C04A2B;
+    --c-bot-3:  #D4691A;
+    --c-bot-4:  #C5821E;
+    --c-bot-5:  #883344;
+    --c-bot-6:  #A04A1F;
+    --c-bot-7:  #B86328;
+    --c-bot-8:  #8B3A2F;
+    --c-bot-9:  #BF5B3A;
+    --c-bot-10: #92402A;
+    --c-contact: #2A1A14;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--c-bg);
+    color: var(--c-ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 56px 32px 80px; }
+
+  .site-header { text-align: center; margin-bottom: 48px; padding-bottom: 36px; border-bottom: 1px solid var(--c-line); }
+  .site-eyebrow { font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-bot-1); font-weight: 600; margin-bottom: 16px; }
+  .site-title { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(36px, 5vw, 56px); line-height: 1.08; letter-spacing: -0.02em; color: var(--c-ink); margin-bottom: 16px; }
+  .site-lede { font-size: 18px; color: var(--c-ink-soft); max-width: 640px; margin: 0 auto; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
+  .bot-card { background: var(--bot-color); color: #FFF8F0; border: none; border-radius: 18px; padding: 28px 26px 26px; text-align: left; cursor: pointer; font-family: inherit; transition: transform 0.18s ease, box-shadow 0.18s ease; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+  .bot-card:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(120, 50, 25, 0.22); }
+  .bot-card:focus-visible { outline: 3px solid var(--c-ink); outline-offset: 3px; }
+  .bot-num { font-family: 'Fraunces', serif; font-weight: 500; font-size: 56px; line-height: 1; opacity: 0.45; margin-bottom: 14px; }
+  .bot-name { font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px; line-height: 1.2; letter-spacing: -0.01em; }
+  .bot-arrow { position: absolute; bottom: 22px; right: 22px; font-size: 22px; line-height: 1; opacity: 0.7; }
+
+  .contact-card {
+    margin-top: 28px;
+    background: var(--c-contact);
+    color: var(--c-bg);
+    border-radius: 18px;
+    padding: 40px 44px 28px;
+    text-align: center;
+  }
+  .contact-message {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    max-width: 720px;
+    margin: 0 auto 28px;
+    color: var(--c-bg);
+    opacity: 0.92;
+  }
+  .contact-toggle {
+    background: none;
+    border: 1.5px solid rgba(255, 248, 240, 0.25);
+    color: var(--c-bg);
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 0.04em;
+    padding: 12px 28px;
+    border-radius: 999px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+  }
+  .contact-toggle:hover {
+    background: rgba(255, 248, 240, 0.08);
+    border-color: rgba(255, 248, 240, 0.45);
+  }
+  .contact-chev {
+    font-size: 18px;
+    line-height: 1;
+    transition: transform 0.25s ease;
+    opacity: 0.7;
+  }
+  .contact-toggle[aria-expanded="true"] .contact-chev {
+    transform: rotate(180deg);
+  }
+  .contact-details {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 248, 240, 0.15);
+    animation: fadeIn 0.35s ease;
+  }
+  .contact-person { display: flex; flex-direction: column; gap: 4px; text-align: center; }
+  .contact-person .name { font-size: 14px; opacity: 0.65; letter-spacing: 0.04em; }
+  .contact-person a { color: var(--c-bg); text-decoration: none; font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px; letter-spacing: 0.01em; transition: opacity 0.15s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+  .contact-person a:hover { opacity: 0.7; }
+  .contact-person .phone-icon { font-size: 18px; opacity: 0.5; }
+
+  @media (max-width: 720px) {
+    .contact-card { padding: 32px 24px 24px; }
+    .contact-message { font-size: 18px; margin-bottom: 22px; }
+    .contact-details { grid-template-columns: 1fr; gap: 20px; }
+  }
+
+  .detail { display: none; animation: fadeIn 0.35s ease; }
+  .detail.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .back-btn { background: none; border: 1px solid var(--c-line); color: var(--c-ink-soft); padding: 10px 18px; border-radius: 999px; font-family: inherit; font-size: 14px; cursor: pointer; margin-bottom: 36px; transition: all 0.15s ease; }
+  .back-btn:hover { background: var(--c-ink); color: var(--c-bg); border-color: var(--c-ink); }
+
+  .detail-header { padding: 40px; border-radius: 22px; color: #FFF8F0; margin-bottom: 40px; background: var(--detail-color); }
+  .detail-num { font-family: 'Fraunces', serif; font-weight: 500; font-size: 14px; letter-spacing: 0.16em; opacity: 0.7; margin-bottom: 18px; text-transform: uppercase; }
+  .detail-title { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(32px, 4.5vw, 48px); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 22px; }
+  .detail-tagline { font-size: 18px; line-height: 1.5; opacity: 0.92; max-width: 720px; }
+
+  .cats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 32px; }
+  .cat-btn { background: var(--c-surface); border: 1.5px solid var(--c-line); color: var(--c-ink); padding: 22px 22px; border-radius: 14px; cursor: pointer; font-family: inherit; font-size: 15px; font-weight: 500; text-align: left; transition: all 0.18s ease; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .cat-btn:hover { border-color: var(--detail-color); transform: translateY(-2px); }
+  .cat-btn.active { background: var(--detail-color); border-color: var(--detail-color); color: #FFF8F0; }
+  .cat-icon { font-size: 22px; opacity: 0.8; }
+
+  .panel { background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 18px; padding: 36px 40px; min-height: 220px; }
+  .panel-label { font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--detail-color); font-weight: 600; margin-bottom: 22px; }
+  .panel-body { font-size: 17px; line-height: 1.7; color: var(--c-ink); }
+  .panel-body p { margin-bottom: 14px; }
+  .panel-body p:last-child { margin-bottom: 0; }
+
+  .cap-list { list-style: none; padding: 0; }
+  .cap-item { padding: 16px 0 16px 36px; border-bottom: 1px solid var(--c-line); position: relative; }
+  .cap-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .cap-item::before { content: "→"; position: absolute; left: 0; top: 16px; color: var(--detail-color); font-weight: 600; font-size: 18px; }
+  .cap-title { font-weight: 600; font-size: 16px; color: var(--c-ink); margin-bottom: 4px; }
+  .cap-detail { font-size: 15px; color: var(--c-ink-soft); line-height: 1.55; }
+
+  .impl-intro { font-size: 14px; color: var(--c-ink-soft); margin-bottom: 18px; line-height: 1.5; }
+  .impl-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }
+  .impl-list a {
+    background: var(--c-bg);
+    border: 1.5px solid var(--c-line);
+    padding: 14px 22px 14px 20px;
+    border-radius: 999px;
+    font-size: 16px;
+    color: var(--c-ink);
+    font-style: italic;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.18s ease;
+  }
+  .impl-list a:hover {
+    background: var(--detail-color);
+    border-color: var(--detail-color);
+    color: var(--c-bg);
+    transform: translateY(-1px);
+  }
+  .impl-list a::after {
+    content: "↗";
+    font-style: normal;
+    font-size: 14px;
+    opacity: 0.6;
+    transition: transform 0.15s ease;
+  }
+  .impl-list a:hover::after { opacity: 1; transform: translate(2px, -2px); }
+
+  .panel-empty { color: var(--c-ink-soft); font-style: italic; text-align: center; padding: 40px 0; font-size: 16px; }
+
+  .site-footer { margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--c-line); text-align: center; font-size: 13px; color: var(--c-ink-soft); letter-spacing: 0.04em; }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 32px 20px 56px; }
+    .detail-header { padding: 28px 24px; }
+    .panel { padding: 24px 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="view-home">
+    <header class="site-header">
+      <div class="site-eyebrow">Proyecto IeA</div>
+      <h1 class="site-title">Tipología de bots pedagógicos</h1>
+      <p class="site-lede">Diez categorías de bots desarrollados para integrar inteligencia artificial en el aula. Cada tipo agrupa propósitos, modalidades de uso y capacidades que se ponen en juego.</p>
+    </header>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="contact-card" role="region" aria-label="Líneas de contacto">
+      <p class="contact-message">Estos bots son sólo puntos de partida, ideas que otros colegas aportaron al proyecto. Recordá que todo es modificable y que el mejor bot es el que cada uno ayuda a diseñar. No dudes en acercarte a Sebas o a Gaby para crear el tuyo.</p>
+      <button class="contact-toggle" id="contact-toggle" aria-expanded="false" aria-controls="contact-details">
+        <span>Contacto</span>
+        <span class="contact-chev" aria-hidden="true">⌄</span>
+      </button>
+      <div class="contact-details" id="contact-details" hidden>
+        <div class="contact-person">
+          <div class="name">Sebastián Manassero</div>
+          <a href="tel:+541121714693"><span class="phone-icon">☏</span>11 2171-4693</a>
+        </div>
+        <div class="contact-person">
+          <div class="name">Gabriela Labonia</div>
+          <a href="tel:+541158021839"><span class="phone-icon">☏</span>11 5802-1839</a>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">Proyecto IeA · Integración de Inteligencia Artificial en la escuela</footer>
+  </div>
+
+  <div id="view-detail" class="detail">
+    <button class="back-btn" onclick="goHome()">← Volver al inicio</button>
+    <div class="detail-header" id="detail-header">
+      <div class="detail-num" id="detail-num"></div>
+      <h2 class="detail-title" id="detail-title"></h2>
+      <p class="detail-tagline" id="detail-tagline"></p>
+    </div>
+    <div class="cats" id="cats"></div>
+    <div class="panel">
+      <div class="panel-label" id="panel-label">Elegí una categoría</div>
+      <div class="panel-body" id="panel-body">
+        <div class="panel-empty">Tocá uno de los botones de arriba para ver la información de esta categoría.</div>
+      </div>
+    </div>
+    <footer class="site-footer">Proyecto IeA · Integración de Inteligencia Artificial en la escuela</footer>
+  </div>
+</div>
+
+<script>
+const bots = [{"n":1,"nombre":"Evaluador de obra o tema","colorVar":"var(--c-bot-1)","tagline":"Mide, mediante método socrático, si el estudiante está en condiciones de aprobar una evaluación.","implementados":[{"nombre":"Frankenstein","url":"https://chatgpt.com/g/g-68f57fd9af948191aef1cdd50d75a855-evaluador-frankenstein-copy"},{"nombre":"Tragedia griega","url":"https://chatgpt.com/g/g-67dd723f9ef881918d7434123e851afe-tragedia-griega"},{"nombre":"Dr. Jekyll y Mr. Hyde","url":"https://chatgpt.com/g/g-689a28f7377481919504e10d032c2d67-evaluador-dr-jekyll-y-mr-hyde"}],"modalidad":"Pensado para usarse antes de una evaluación, como diagnóstico o como práctica intensiva de cierre. Funciona en clase o de manera domiciliaria. Antes de habilitarlo, el docente carga en el bot el material de estudio, la rúbrica y los criterios con los que se va a evaluar.","funciona":"Inicia un diálogo socrático: pregunta, escucha y repregunta sobre los puntos débiles que detecta. Avanza por los ejes de la rúbrica del docente hasta verificar si el estudiante alcanza los criterios mínimos para aprobar.","capacidades":[{"t":"Comprensión lectora profunda","d":"Entender lo que la obra dice y lo que sugiere entre líneas."},{"t":"Análisis de personajes, conflictos e ideas","d":"Identificar motivaciones, tensiones y temas centrales del texto."},{"t":"Relación con el contexto histórico-cultural","d":"Situar la obra en su época y en las discusiones de su tiempo."},{"t":"Argumentación con citas y ejemplos","d":"Sostener afirmaciones con fragmentos concretos del propio texto."},{"t":"Precisión en la expresión escrita","d":"Escribir con claridad, registro académico y vocabulario ajustado."}]},{"n":2,"nombre":"Entrenador de comprensión textual","colorVar":"var(--c-bot-2)","tagline":"Trabaja semana a semana sobre textos aleatorios o un corpus curado por el docente.","implementados":[{"nombre":"Comprensión_Textual","url":"https://chatgpt.com/g/g-67cf4379150481919b6983408f6fc141-comprension-textual"},{"nombre":"Comprensión_Odisea","url":"https://chatgpt.com/g/g-69d654a25f4881918280e53a0e013d64-comprension-odisea"}],"modalidad":"De uso recurrente, generalmente semanal o quincenal. Cada estudiante lo resuelve en su tiempo, fuera del aula. Requiere que el docente actualice las consignas y la pregunta vinculada a la clase de la semana en cada ciclo de uso.","funciona":"Presenta un texto del corpus o uno elegido al azar y guía la lectura con preguntas escalonadas. En cada ronda suma una pregunta vinculada a un contenido específico de la semana y cierra con una consigna metacognitiva sobre el propio proceso de comprensión.","capacidades":[{"t":"Comprensión literal e inferencial","d":"Entender lo que el texto dice y también lo que sugiere sin decirlo."},{"t":"Análisis textual","d":"Reconocer intenciones, temas, símbolos y relaciones entre ideas."},{"t":"Justificación con evidencia","d":"Apoyar las propias ideas en fragmentos concretos del texto."},{"t":"Pensamiento crítico y atención lectora","d":"Interpretar y cuestionar la información en lugar de repetirla."},{"t":"Autonomía para resolver consignas","d":"Ganar seguridad para trabajar sin depender de ayuda externa."}]},{"n":3,"nombre":"Argumentativo","colorVar":"var(--c-bot-3)","tagline":"Sostiene siempre la postura contraria al estudiante y, tras varias rondas, evalúa su capacidad argumentativa.","implementados":[{"nombre":"Debatronic","url":"https://chatgpt.com/g/g-68caad6746b081919341a87713c7eb00-debatronic"},{"nombre":"Debatronic_Inglés","url":"https://chatgpt.com/g/g-69f2585ca4548191991b5ee123965007-debatronic-english"},{"nombre":"Debatronic_Portugués","url":"https://chatgpt.com/g/g-6a0b2c1c893081919014f4d62f992285-debatronic-portugues"}],"modalidad":"Diseñado para sostenerse durante un período de varias clases. La premisa la carga el docente o la elige el estudiante. Admite variantes con calificación, sin calificación, con temas precargados en el prompt y en distintos idiomas. Se puede usar tanto en el aula como en casa.","funciona":"Recibe la premisa, adopta la postura contraria al estudiante y sostiene el intercambio durante varias rondas: objeta, repregunta y exige fundamentación. Al cabo de un número definido de turnos devuelve una evaluación del desempeño argumentativo.","capacidades":[{"t":"Argumentación con razones","d":"Sostener una idea con fundamentos, no con un \"me parece\"."},{"t":"Pensamiento crítico","d":"Revisar si lo dicho se sostiene o si tiene agujeros lógicos."},{"t":"Contraargumentación","d":"Adaptarse, responder objeciones y reformular sin contradicciones."},{"t":"Claridad expresiva y escucha activa","d":"Ordenar las ideas y captar con precisión qué objeción se está respondiendo."},{"t":"Flexibilidad y persistencia","d":"Reconocer los límites de la propia postura y sostener la discusión."},{"t":"Metacognición","d":"Pensar sobre cómo se piensa y detectar los sesgos propios."}]},{"n":4,"nombre":"Analizador de fuentes","colorVar":"var(--c-bot-4)","tagline":"Revisor académico que analiza si las fuentes elegidas son fidedignas y pertinentes.","implementados":[{"nombre":"Biofuentes","url":"https://chatgpt.com/g/g-6848e01c50b48191abce4d2de81f2f47-bio-fuentes"}],"modalidad":"De uso puntual, asociado a un trabajo de investigación entregado o en borrador. Sirve tanto para producciones individuales como grupales, en clase o en casa. Es adaptable a distintas disciplinas académicas.","funciona":"El estudiante envía la consigna del trabajo y el trabajo terminado con sus fuentes citadas. El bot actúa como revisor académico con enfoque pedagógico: explica por qué cada fuente resulta pertinente o no, señala posibles sesgos y sugiere criterios para la próxima búsqueda.","capacidades":[{"t":"Evaluación crítica de la información","d":"Distinguir fuentes confiables de otras poco serias o dudosas."},{"t":"Criterio para seleccionar fuentes","d":"Elegir materiales útiles y adecuados al tema específico."},{"t":"Pensamiento científico","d":"Analizar con evidencia, autoría y respaldo institucional."},{"t":"Reconocimiento de sesgos y limitaciones","d":"Detectar cuándo una fuente es parcial, imprecisa o poco rigurosa."},{"t":"Uso responsable de la información","d":"Verificar antes de citar y emplear los contenidos con honestidad académica."}]},{"n":5,"nombre":"Entrenamiento para exámenes internacionales","colorVar":"var(--c-bot-5)","tagline":"Entrena fuera del aula con las consignas, los formatos y las rúbricas oficiales del examen.","implementados":[{"nombre":"Portugués","url":"https://chatgpt.com/g/g-68126eeaed04819190937c38cd676dd2-portugues-treinador-celpe-bras"}],"modalidad":"Recurso de estudio domiciliario y recurrente. Está pensado para que cada estudiante practique en su propio tiempo, más allá de las correcciones del docente. De uso sostenido durante todo el período de preparación del examen.","funciona":"Trabaja con las rúbricas y los criterios oficiales del examen. Admite dos modos: el bot entrega un texto con consigna tipo examen, o el estudiante pide uno del corpus precargado. Existe además una variante para corregir manuscritos: el bot transcribe lo escrito, le confirma al estudiante si la transcripción es correcta y luego califica.","capacidades":[{"t":"Dominio del formato del examen","d":"Familiarizarse con el tipo de tarea y sus restricciones reales."},{"t":"Comprensión lectora y auditiva","d":"Procesar textos y audios en lengua extranjera."},{"t":"Producción escrita ajustada a rúbrica","d":"Escribir cumpliendo los criterios oficiales de corrección."},{"t":"Manejo del tiempo del examen","d":"Resolver dentro del tiempo y las restricciones formales reales."},{"t":"Autocorrección sistemática","d":"Detectar y corregir los propios errores antes de entregar."}]},{"n":6,"nombre":"Caligrafía","colorVar":"var(--c-bot-6)","tagline":"Recibe imágenes de manuscritos, las transcribe y devuelve un análisis técnico de la letra.","implementados":[{"nombre":"Caligrafía Masiva","url":"https://chatgpt.com/g/g-67cf4829f638819193b84b448153fd60-caligrafia-masiva"}],"modalidad":"De uso recurrente y principalmente domiciliario. La mejora caligráfica requiere práctica sostenida, así que conviene fijar una rutina semanal o quincenal fuera del horario de clase.","funciona":"El bot entrega un texto de unas trescientas palabras. El estudiante lo copia a mano y envía la foto del manuscrito. El bot transcribe lo que lee, le pregunta al estudiante si la transcripción contiene errores y devuelve una nota junto con una devolución técnica de la caligrafía.","capacidades":[{"t":"Legibilidad y prolijidad","d":"Escribir de modo que cualquier lector pueda entender el texto sin esfuerzo."},{"t":"Control motor fino","d":"Precisión del trazo, del tamaño, del espaciado y la alineación."},{"t":"Constancia y autocorrección","d":"Sostener la práctica y revisar los propios errores con paciencia."},{"t":"Organización visual del texto","d":"Lograr una escritura ordenada, equilibrada y estética."},{"t":"Velocidad con claridad","d":"Encontrar el equilibrio entre escribir rápido y mantener la letra legible."},{"t":"Comprensión lectora indirecta","d":"Al copiar con atención también se refuerza vocabulario, puntuación y sintaxis."}]},{"n":7,"nombre":"Acompañamiento de proyectos","colorVar":"var(--c-bot-7)","tagline":"Orienta el desarrollo del proyecto sin sustituir al estudiante en la producción.","implementados":[{"nombre":"Consultor_ONU","url":"https://chatgpt.com/g/g-68152b4c82f88191a2cc4778bcd3c95a-onu-asistente"}],"modalidad":"Acompaña al grupo durante toda la duración del proyecto. Se usa habitualmente en trabajos grupales y combina trabajo en clase con trabajo domiciliario. Al inicio del proyecto se le cargan la reglamentación, las consignas y los materiales correspondientes.","funciona":"Recuerda en cada interacción el estado del proyecto y los materiales asociados. Ayuda al grupo a planificar etapas, formula preguntas de reflexión para activar la creatividad y sugiere recursos técnicos pertinentes. En proyectos de imagen o video puede hacer un análisis crítico de las instancias previas. Orienta, no produce.","capacidades":[{"t":"Planificación y gestión del trabajo","d":"Organizar etapas, plazos y entregas a lo largo del proyecto."},{"t":"Distribución de roles","d":"Acordar dentro del grupo quién hace qué y con qué responsabilidad."},{"t":"Creatividad orientada por preguntas","d":"Generar ideas a partir de las preguntas que formula el bot."},{"t":"Análisis crítico de la propia producción","d":"Revisar instancias previas para ajustar la próxima versión."},{"t":"Metacognición del proceso","d":"Reflexionar sobre las decisiones tomadas a lo largo del proyecto."}]},{"n":8,"nombre":"Perspectiva de una teoría","colorVar":"var(--c-bot-8)","tagline":"Conversa siempre desde el marco de la teoría cargada y corrige imprecisiones disciplinares.","implementados":[{"nombre":"Evolución Alfa","url":"https://chatgpt.com/g/g-68274c99e2f08191bea4f56599958f3b-evolucion-alfa"}],"modalidad":"De uso recurrente durante toda la unidad temática correspondiente. Funciona como preparación para evaluaciones orales o escritas, y como ajuste fino del vocabulario propio de la disciplina. Apto para clase y para trabajo en casa.","funciona":"Conversación abierta dentro del marco de la teoría cargada. El bot responde siempre desde esa perspectiva, corrige imprecisiones terminológicas y señala los errores conceptuales más frecuentes del tema. Adapta el nivel de exigencia al ritmo del estudiante.","capacidades":[{"t":"Precisión terminológica","d":"Usar el vocabulario y las nociones propias de la disciplina."},{"t":"Manejo del marco teórico","d":"Argumentar dentro de las reglas internas de la teoría."},{"t":"Distinción entre intuición y teoría","d":"Diferenciar el sentido común de la explicación disciplinar."},{"t":"Identificación de errores conceptuales","d":"Reconocer las confusiones más típicas del tema en estudio."},{"t":"Preparación para evaluaciones","d":"Entrenar el registro disciplinar para orales y escritos."}]},{"n":9,"nombre":"Simuladores","colorVar":"var(--c-bot-9)","tagline":"Coloca al estudiante frente a escenarios donde cada decisión modifica el rumbo y abre consecuencias.","implementados":[{"nombre":"Simulador de decisiones empresariales","url":"https://chatgpt.com/g/g-68f5485b28fc81918bb4ace9c75033cf-simulador-decisiones-empresariales"},{"nombre":"Juicio al progreso","url":"https://chatgpt.com/g/g-68e65f02b7a0819198f33abf700749ea-juicio-al-progreso"}],"modalidad":"Pensado para proyectos específicos, en clase o de manera domiciliaria. Simula escenarios en los que el estudiante toma decisiones y asume sus consecuencias. El docente define previamente las opciones disponibles, las restricciones y la temática general del trabajo.","funciona":"Despliega uno o varios escenarios construidos a partir de las pautas del docente. Funciona como un «Elige tu propia aventura» en tiempo real: cada decisión del estudiante modifica el rumbo del relato, habilita nuevas opciones y abre consecuencias que deberá asumir.","capacidades":[{"t":"Evaluación de opciones","d":"Sopesar las distintas alternativas antes de tomar una decisión."},{"t":"Comparación de consecuencias","d":"Anticipar y contrastar los efectos posibles de cada elección."},{"t":"Detección de errores e inconsistencias","d":"Reconocer fallas en el propio razonamiento o en el escenario."},{"t":"Fundamentación de decisiones","d":"Argumentar por qué se elige un curso de acción y no otro."},{"t":"Tolerancia al error","d":"Asumir que las decisiones tienen costos y aprender de ellos."}]},{"n":10,"nombre":"Personajes","colorVar":"var(--c-bot-10)","tagline":"Asume la voz de un personaje histórico o de ficción a partir de la investigación que realiza el estudiante.","implementados":[{"nombre":"La_Criatura","url":"https://chatgpt.com/g/g-675ad508a6ec8191ada609b9c3cb7ee2-la-criatura"}],"modalidad":"Son bots creativos cuyo valor pedagógico está en el proceso de planificación previo a la construcción del bot. Se pueden emplear herramientas como Apollo, Poe o ChatGPT, siempre con mediación docente. El resultado puede usarse en una exposición o instancia oral.","funciona":"El bot se desenvuelve con la personalidad del personaje. El trabajo del estudiante consiste en investigar la historia, las ideas y el modo de hablar de ese personaje, y en proveer al bot el material curado que servirá como base de conocimientos.","capacidades":[{"t":"Investigación documental","d":"Buscar y validar fuentes sobre la vida y la obra del personaje."},{"t":"Análisis de personaje","d":"Reconstruir motivaciones, ideas y modo de pensar de quien se va a representar."},{"t":"Síntesis y curaduría de información","d":"Seleccionar y organizar el material que mejor define al personaje."},{"t":"Caracterización del lenguaje","d":"Identificar el registro, el vocabulario y el tono propios del personaje."},{"t":"Comprensión del contexto","d":"Situar al personaje en su tiempo y en su mundo de referencia."},{"t":"Adopción de una perspectiva ajena","d":"Sostener un punto de vista distinto al propio con coherencia interna."}]}];
+
+const categorias = [
+  { id: "modalidad",     label: "Modalidad de uso",      icon: "◇" },
+  { id: "funciona",      label: "Cómo funciona",         icon: "◐" },
+  { id: "capacidades",   label: "Capacidades en juego",  icon: "◉" },
+  { id: "implementados", label: "Bots ya implementados", icon: "◆" }
+];
+
+const grid = document.getElementById("grid");
+bots.forEach(b => {
+  const card = document.createElement("button");
+  card.className = "bot-card";
+  card.style.setProperty("--bot-color", b.colorVar);
+  card.innerHTML = '<div class="bot-num">' + String(b.n).padStart(2, "0") + '</div><div class="bot-name">' + b.nombre + '</div><div class="bot-arrow">→</div>';
+  card.onclick = () => openBot(b.n);
+  grid.appendChild(card);
+});
+
+let currentBot = null;
+
+function openBot(n) {
+  currentBot = bots.find(b => b.n === n);
+  document.getElementById("detail-num").textContent = "Categoría · " + String(currentBot.n).padStart(2, "0");
+  document.getElementById("detail-title").textContent = currentBot.nombre;
+  document.getElementById("detail-tagline").textContent = currentBot.tagline;
+  document.getElementById("detail-header").style.setProperty("--detail-color", currentBot.colorVar);
+  document.documentElement.style.setProperty("--detail-color", currentBot.colorVar);
+
+  const catsEl = document.getElementById("cats");
+  catsEl.innerHTML = "";
+  categorias.forEach(c => {
+    const btn = document.createElement("button");
+    btn.className = "cat-btn";
+    btn.dataset.cat = c.id;
+    btn.innerHTML = '<span>' + c.label + '</span><span class="cat-icon">' + c.icon + '</span>';
+    btn.onclick = () => showCategory(c.id);
+    catsEl.appendChild(btn);
+  });
+
+  document.getElementById("panel-label").textContent = "Elegí una categoría";
+  document.getElementById("panel-body").innerHTML = '<div class="panel-empty">Tocá uno de los botones de arriba para ver la información de esta categoría.</div>';
+
+  document.getElementById("view-home").style.display = "none";
+  document.getElementById("view-detail").classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function goHome() {
+  document.getElementById("view-home").style.display = "block";
+  document.getElementById("view-detail").classList.remove("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+
+const contactToggle = document.getElementById("contact-toggle");
+const contactDetails = document.getElementById("contact-details");
+if (contactToggle && contactDetails) {
+  contactToggle.addEventListener("click", () => {
+    const open = contactToggle.getAttribute("aria-expanded") === "true";
+    contactToggle.setAttribute("aria-expanded", String(!open));
+    contactDetails.hidden = open;
+  });
+}
+
+function showCategory(catId) {
+  document.querySelectorAll(".cat-btn").forEach(b => b.classList.toggle("active", b.dataset.cat === catId));
+  const cat = categorias.find(c => c.id === catId);
+  document.getElementById("panel-label").textContent = cat.label;
+  const body = document.getElementById("panel-body");
+
+  if (catId === "implementados") {
+    body.innerHTML =
+      '<p class="impl-intro">Tocá cada nombre para abrir el bot en una pestaña nueva.</p>' +
+      '<ul class="impl-list">' +
+      currentBot.implementados.map(i =>
+        '<li><a href="' + i.url + '" target="_blank" rel="noopener noreferrer">' + i.nombre + '</a></li>'
+      ).join('') +
+      '</ul>';
+  } else if (catId === "capacidades") {
+    body.innerHTML = '<ul class="cap-list">' + currentBot.capacidades.map(c => '<li class="cap-item"><div class="cap-title">' + c.t + '</div><div class="cap-detail">' + c.d + '</div></li>').join('') + '</ul>';
+  } else if (catId === "modalidad") {
+    body.innerHTML = '<p>' + currentBot.modalidad + '</p>';
+  } else if (catId === "funciona") {
+    body.innerHTML = '<p>' + currentBot.funciona + '</p>';
+  }
+}
+</script>
+</body>
+</html>
